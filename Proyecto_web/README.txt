@@ -1,1 +1,1 @@
-Esta carpeta contendr·s la parte web del proyecto.
+Esta carpeta contendr√° lo relacionado con la parte web del proyecto.

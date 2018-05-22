@@ -1,0 +1,1 @@
+Esta carpeta contendrá lo relacionado con la aplicación de escritorio.

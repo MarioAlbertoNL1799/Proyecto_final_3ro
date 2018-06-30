@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Contacto Pardo-Design</title>
+        <style type="text/css">
+            body{
+                background-color:steelblue;
+            }
+            th{
+                font-size: 1.2em; 
+                font-family: serif;
+                padding: 12px
+            }
+            #enviar_a,#cancelar{
+                height: 35px; 
+                width: 90px; 
+                font: 14px fantasy; 
+                margin-left: 2em; 
+                margin-right: 2em; 
+                border-radius: 6px; 
+                background-color: lightgrey;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <center><h1>Contact</h1>
+            <table>
+                <tr>
+                    <th>Name:</th>
+                    <td>
+                        <input type="text" id="tp_text" value="Insert name">
+                    </td>
+                </tr>
+                <tr>
+                    <th>e-mail:</th>
+                    <td>
+                        <input type="email" name="user email" utofocus="autofocus"/>
+                    </td>
+                    <th>
+                        Subject: 
+                    </th>
+                    <td>
+                        <select name="Subject">
+                            <option>(None)</option>
+                            <option>Permit</option>
+                            <option>Contact</option>
+                            <option>Inform</option>
+                            <option>Request</option>
+                            <option>Other</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Message:
+                    </th>
+                    <td>
+                        <textarea id="text_mul" rows="4" cols="60">Input message.</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <th>
+                        <input type="submit" id="enviar_a" value="Submit"/>
+                        <input type="button" id="cancelar" value="Cancel"/>
+                    </th>
+                </tr>
+            </table>
+            </center>
+    </form></body>
+</html>

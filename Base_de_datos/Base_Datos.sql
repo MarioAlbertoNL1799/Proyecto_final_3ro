@@ -16,9 +16,7 @@ create TABLE usuario(
     username VARCHAR(15) UNIQUE not null,
     contraseña CHAR(8) not null,
     tipo enum("User", "Admin") DEFAULT "User",
-    rfc_e char(13),
-    num_proyecto int(5) unsigned not null,
-    FOREIGN KEY (num_proyecto) REFERENCES proyecto(id_p)
+    rfc_e char(13) not null,
     FOREIGN KEY(rfc_e) REFERENCES empleado(rfc));
 /*usuarios acorde a empleados*/
 create table registro( 
@@ -37,7 +35,7 @@ CREATE TABLE Existencias(
     codigo INT(5) ZEROFILL unsigned auto_increment PRIMARY KEY,
     clase enum("Herramienta", "Material") not null,
     nombre VARCHAR(25) not null,
-    especificaciones text null;
+    especificaciones text null,
     cantidad INT(6) NOT NULL,
     unidad_m enum("Metros","Galones","Kilos","Litros", "Piezas")null,
     Tipo_m enum("Solido","Liquido") NULL);
@@ -71,6 +69,8 @@ create table usar(
     no_proyecto int(5) unsigned not null,
     requerido int(5) zerofill unsigned not null,
     cantidad int(6) unsigned not null,
+    id_user TINYINT(3) unsigned not NULL,
+    FOREIGN KEY(id_user) REFERENCES usuario(id),
     foreign key(no_proyecto) references proyecto(id_p),
     foreign key(requerido) references Existencias(codigo));
 /*asignacion de materiales y cantidad a usar*/

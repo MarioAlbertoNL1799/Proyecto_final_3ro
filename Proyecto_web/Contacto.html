@@ -26,41 +26,63 @@
         <form>
             <center><h1>Contact</h1>
             <table>
+                <table border="1">
                 <tr>
-                    <th>Name:</th>
-                    <td>
-                        <input type="text" id="tp_text" value="Insert name">
+                    <th>¿Cómo le podemos ayudar?</th>
+                    <td rowspan="2">
+                        <select name="serivio" aria-invalid="false">
+                            <option>Seleccione un servicio</option>
+                            <option>Diseño</option>
+                            <option>Calidad</option> 
+                            <option>Ingeniería</option>
+                            <option>Pre-Peries</option>
+                            <option>Testing</option>
+                            <option>Validación</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <th>e-mail:</th>
                     <td>
-                        <input type="email" name="user email" utofocus="autofocus"/>
+                     <input type="radio" name="TIPO" value="Automotriz" id="Automotriz" checked="checked"/>
+                        <label for="Automotriz" >Automotriz</label>  
+                        
+                    <input type="radio" name="TIPO" value="Industrial" id= "Industrial">
+                        <label for="Industrial">Industrial</label>
                     </td>
-                    <th>
-                        Subject: 
-                    </th>
-                    <td>
-                        <select name="Subject">
-                            <option>(None)</option>
-                            <option>Permit</option>
-                            <option>Contact</option>
-                            <option>Inform</option>
-                            <option>Request</option>
-                            <option>Other</option>
-                        </select>
-                    </td>
+                </tr>
+                <tr>
+                    <th>Nombre completo:</th>
+                    <th>Nombre del proyecto:</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="Cliente"/></td>
+                    <td><input type="text" name="Proyecto"/></td>
+                </tr>
+                <tr>
+                    <th>Compañía:</th>
+                    <th>País:</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="company"/></td>
+                    <td><input type="text" name="country"/></td>
+                </tr>
+                <tr>
+                    <th>Teléfono:</th>
+                    <th>Correo:</th>
+                </tr>
+                <tr>
+                    <td><input type="tel" name="phone"/></td>
+                    <td><input type="email" name="email" autofocus= "autofocus"/></td>
                 </tr>
                 <tr>
                     <th>
                         Message:
                     </th>
                     <td>
-                        <textarea id="text_mul" rows="4" cols="60">Input message.</textarea>
+                        <textarea id="text_mul" rows="4" cols="60"></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
                     <th>
                         <input type="submit" id="enviar_a" value="Submit"/>
                         <input type="button" id="cancelar" value="Cancel"/>

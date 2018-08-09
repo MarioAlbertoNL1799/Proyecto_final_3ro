@@ -14,8 +14,8 @@ create TABLE empleado(
 create TABLE usuario(  
     id TINYINT(3) unsigned auto_increment PRIMARY KEY,
     username VARCHAR(15) UNIQUE not null,
-    contraseña CHAR(8) not null,
-    tipo enum("User", "Admin") DEFAULT "User",
+    password CHAR(8) not null,
+    tipo enum("USER", "ADMIN") DEFAULT "User",
     rfc_e char(13) not null,
     FOREIGN KEY(rfc_e) REFERENCES empleado(rfc));
 /*usuarios acorde a empleados*/

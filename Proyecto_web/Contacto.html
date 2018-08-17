@@ -1,72 +1,101 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Contacto Pardo-Design</title>
-        <style type="text/css">
-            body{
-                background-color:steelblue;
-            }
-            th{
-                font-size: 1.2em; 
-                font-family: serif;
-                padding: 12px
-            }
-            #enviar_a,#cancelar{
-                height: 35px; 
-                width: 90px; 
-                font: 14px fantasy; 
-                margin-left: 2em; 
-                margin-right: 2em; 
-                border-radius: 6px; 
-                background-color: lightgrey;
-            }
-        </style>
+        <title>Contacto</title>
+        <link href="css/Contact.css" rel="stylesheet" type="text/css" media="screen"/>
+        <link href="icon/css/fontello.css" rel="stylesheet">
+        <meta charset="utf-8">
     </head>
     <body>
-        <form>
-            <center><h1>Contact</h1>
-            <table>
+        <main>
+            <div class="content-all">
+                <header>
+                    <section id="logo"><a href="Index.html"><img id="l1" src="images/PardoLOGO.jpg"></a></section>
+                </header>
+                <input type="checkbox" id="check">
+        <label for="check" class="icon-menu"></label>
+        <nav class="menu">
+            <ul>
+                <li>Nosotros</li>
+                <li>Proyectos</li>
+                <li><a href="Contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+            <article>
+            <section id="contact">    
+            <form>
+                <h1>Contacto</h1><br>
+            <table border="1">
                 <tr>
-                    <th>Name:</th>
-                    <td>
-                        <input type="text" id="tp_text" value="Insert name">
+                    <th>¿Cómo le podemos ayudar?</th>
+                    <td rowspan="2">
+                        <select name="serivio" aria-invalid="false">
+                            <option>Seleccione un servicio</option>
+                            <option>Diseño</option>
+                            <option>Calidad</option> 
+                            <option>Ingeniería</option>
+                            <option>Pre-Peries</option>
+                            <option>Testing</option>
+                            <option>Validación</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <th>e-mail:</th>
                     <td>
-                        <input type="email" name="user email" utofocus="autofocus"/>
+                     <input type="radio" name="TIPO" value="Automotriz" id="Automotriz" checked="checked"/>Automotriz  
+                        
+                    <input type="radio" name="TIPO" value="Industrial" id= "Industrial">
+                        Industrial
                     </td>
-                    <th>
-                        Subject: 
-                    </th>
-                    <td>
-                        <select name="Subject">
-                            <option>(None)</option>
-                            <option>Permit</option>
-                            <option>Contact</option>
-                            <option>Inform</option>
-                            <option>Request</option>
-                            <option>Other</option>
-                        </select>
-                    </td>
+                </tr>
+                <tr>
+                    <th>Nombre completo:</th>
+                    <th>Nombre del proyecto:</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="Cliente"/></td>
+                    <td><input type="text" name="Proyecto"/></td>
+                </tr>
+                <tr>
+                    <th>Compañía:</th>
+                    <th>País:</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="company"/></td>
+                    <td><input type="text" name="country"/></td>
+                </tr>
+                <tr>
+                    <th>Teléfono:</th>
+                    <th>Correo:</th>
+                </tr>
+                <tr>
+                    <td><input type="tel" name="phone"/></td>
+                    <td><input type="email" name="email" autofocus= "autofocus"/></td>
                 </tr>
                 <tr>
                     <th>
                         Message:
                     </th>
                     <td>
-                        <textarea id="text_mul" rows="4" cols="60">Input message.</textarea>
+                        <textarea id="text_mul" rows="4" cols="60"></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <th>
+                    <th colspan="2">
                         <input type="submit" id="enviar_a" value="Submit"/>
                         <input type="button" id="cancelar" value="Cancel"/>
                     </th>
                 </tr>
             </table>
             </center>
-    </form></body>
+            </form>
+                </section>
+        </article>
+        <footer>
+            <section id="logo2"><img class="l2" src="images/PardoLOGO.jpg"></section>
+            <section id="logo3"><img class="l2" src="images/LogoACX.png"></section>
+        </footer>
+        </div>
+    </main>
+  </body>
 </html>

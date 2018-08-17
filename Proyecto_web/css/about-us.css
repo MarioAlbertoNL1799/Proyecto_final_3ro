@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+main{
+    width: 100%;
+    height: auto;
+    background-color: whie;
+    position: absolute;
+}
+.content-all{
+    width: 100%;
+    height: 500px;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 120px;
+}
+fieldset{
+    position: static;
+    width: 700px;
+    height: 400px;
+}
+header{
+    background-color: white;
+    width: 100%;
+    height: 120px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+#logo{
+    margin-right: 40px;
+    float: right;
+    margin-left: 40px;
+    width: 400px;
+    height: 120px;
+    background-color: white;
+}
+
+#l1{
+    width: 400px;
+    height: 120px;
+}
+#check{
+    display: none;
+}
+#check:checked ~ .menu{
+    width: 400px;
+}
+.menu{
+    position: fixed;
+    top:120px;
+    width: 0px;
+    height: 100vh;
+    background-color: white;
+    transition: all 500ms;
+    transition-timing-function:cubic-bezier(1,0,0,1);
+    overflow: hidden;
+    z-index: 1;
+}
+.menu li{
+    font-family:serif,fantasy;
+    font-size: 25px;
+    list-style: none;
+    padding: 30px;
+    color: black;
+    cursor: pointer;
+    transition: all 300ms;
+    display: block;
+    width: 400px;
+}
+.menu li:hover{
+    
+    background-color: cadetblue;
+    border-bottom: 1px solid black;
+}
+.content-all label{
+    position: fixed;
+    max-width: 1000px;
+    top: 30px;
+    font-size:50px;
+    color:#07326B;
+    cursor:pointer;
+    z-index: 10;
+}
+a{
+    text-decoration: none;
+}
+a:link{
+    color: black;
+}
+a:visited{
+    color:darkred;
+}
+article{
+  background-color: #07326B;
+  width: 100%;
+  height: 500px;
+  font-family: monospace, cursive;
+    color: white;
+    background-image: url(FondoPag1.jpg);
+    font-size: 15px;
+}
+#nosotros{
+    
+    width: 80%;
+    margin-left: 80px;
+}
+#historia{
+    width: 80%;
+    margin-left: 80px;
+}
+h1{
+    text-align: center;
+    border-top: solid #00baff;
+    border-bottom: solid #00baff;
+}
+h3{text-align: center;}
+.flota {
+        float: right;
+        margin-left: 30px;
+        margin-top: 20px;
+}
+
+footer{
+    background-color: whitesmoke;
+    height: 100px;
+    clear:both;
+}
+.l2{
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 10px;
+    width: 300px;
+    height: 80px;
+}
+#logo2{
+    float: left;
+}
+#logo3{
+    float: left;
+    margin-left: 300px;
+}

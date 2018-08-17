@@ -1,0 +1,271 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+main{
+    width: 100%;
+    height: auto;
+    background-color: whie;
+}
+.content-all{
+    width: 100%;
+    height: 1500px;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 120px;
+}
+header{
+    background-color: white;
+    width: 100%;
+    height: 120px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    opacity: 0.8;
+}
+#logo{
+    margin-right: 40px;
+    float: right;
+    margin-left: 700px;
+    width: 400px;
+    height: 120px;
+    background-color: white;
+}
+
+#l1{
+    width: 400px;
+    height: 120px;
+}
+#check{
+    display: none;
+}
+#check:checked ~ .menu{
+    width: 400px;
+}
+.menu{
+    position: fixed;
+    top:120px;
+    width: 0px;
+    height: 100vh;
+    background-color: white;
+    transition: all 500ms;
+    transition-timing-function:cubic-bezier(1,0,0,1);
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0.8;
+}
+.menu li{
+    font-family:serif,fantasy;
+    font-size: 25px;
+    list-style: none;
+    padding: 30px;
+    color: black;
+    cursor: pointer;
+    transition: all 300ms;
+    display: block;
+    width: 400px;
+}
+.menu li:hover{
+    
+    background-color: cadetblue;
+    border-bottom: 1px solid black;
+}
+.content-all label{
+    position: fixed;
+    max-width: 1000px;
+    top: 30px;
+    font-size:50px;
+    color:#07326B;
+    cursor:pointer;
+    z-index: 10;
+}
+a{
+    text-decoration: none;
+}
+a:link{
+    color: #338cd8;
+}
+a:visited{
+    color:#0045ff;
+}
+article{
+  background-color: #07326B;
+  width: 100%;
+  height: 1400px;
+  position: relative;
+}
+.slider{
+    width: 100%;
+    height: 500px;
+    margin: auto;
+    position: relative;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.slider img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.7s;
+}
+.slider input[type="radio"]{
+    display: none;
+}
+.slider input[type="radio"]:checked ~ img{
+    opacity: 1;
+}
+.slider input[type="radio"] + label{
+    position: relative;
+    z-index: 50;
+    margin: 10px;
+    display: block;
+    top:1px;
+    width:30px;
+    height: 6px;
+    background: black;   
+    cursor: pointer;
+}
+.slider input[type="radio"]:checked + label{
+    background: red;
+}
+#info{
+    margin-top: 20px;
+    text-align: center;
+    
+}
+.botones{
+    margin: 20px;
+    margin-left: 30px;
+    width: 82px;
+    height: 82px;
+}
+.botones1{
+    float: left;
+    font-family: monospace, cursive;
+    color: white;
+    margin-left: 28px;
+}
+.botones1 p{
+    font-size: 14px;
+    font-family: monospace, cursive;
+    text-align: center;
+}
+#info2{
+    float: left;
+    margin-top: 40px;
+    background-color: aliceblue;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+}
+#info2 p{
+    margin-top: 15px;
+    font-size: 17px;
+    font-family: monospace, cursive;
+    text-align: justify;
+}
+h1{
+    text-align: center;
+    border-top: solid black;
+    border-bottom: solid black;
+    font-size: 30px;
+    font-family: monospace, cursive;
+}
+#titulo{
+    text-align: center;
+    font-family: monospace, cursive;
+    color: #0093ff;
+    margin-top: 45px;
+    margin-left: 400px;
+    position: absolute;
+    font-size: 40px;
+}
+#info3{
+    float: left;
+    width: 100%;
+    height: 400px;
+    background-image: url(FondoPag1.jpg);
+}
+#fondo{
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+#p1{
+    float: left;
+    margin-right: 20px;
+    position: absolute;
+    margin-top: 150px;
+    margin-left: 100px;
+    font-size: 20px;
+    font-family: monospace, cursive;
+    text-align: center;
+    color: white;
+}
+.p1{
+    width: 250px;
+    height: 150px;
+}
+#p2{
+    float: left;
+    margin-right: 20px;
+    position: absolute;
+    margin-top: 150px;
+    margin-left: 400px;
+    font-size: 20px;
+    font-family: monospace, cursive;
+    text-align: center;
+    color: white;
+}
+#p3{
+    float: left;
+    margin-right: 20px;
+    position: absolute;
+    margin-top: 150px;
+    margin-left: 700px;
+    font-size: 20px;
+    font-family: monospace, cursive;
+    text-align: center;
+    color: white;
+}
+.projects img {
+    border-radius: 24px;
+}
+.projects{
+    text-decoration: none;
+    
+}
+.projects:hover{
+    color: #00baff;
+}
+footer{
+    background-color: whitesmoke;
+    height: 100px;
+    clear:both;
+}
+.l2{
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 10px;
+    width: 300px;
+    height: 80px;
+}
+#logo2{
+    float: left;
+}
+#logo3{
+    float: left;
+    margin-left: 300px;
+}
+
+
+

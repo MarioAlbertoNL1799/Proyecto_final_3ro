@@ -5,17 +5,53 @@
  */
 package Escritorio;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author manl_
  */
 public class Admin extends javax.swing.JFrame {
-
+    //Se generan copias de los frames a utilizar
+    Registro_compras c = new Registro_compras();
+    Proyecto p = new Proyecto();
+    Inventario i = new Inventario();
+    Proveedores pro = new Proveedores();
+    Nombre_usuario nue = new Nombre_usuario();
+    nueva_contra nc = new nueva_contra();
+    
+    public static Inicio frinicio = null;
+    public static nueva_contra frnueva = null;
+    public static Nombre_usuario frnombre = null;
+    public static Registro_compras frcompra = null;
+    public static Proyecto frpro = null;
+    public static Inventario frin = null;
+    public static Proveedores frprove = null;
+    public static Empleado frempleado = null;
+    public static Usuarios frusuario = null;
+    Admin fradmin;
+    
+    
     /**
      * Creates new form Admin
      */
+    //private Inicio jf_inicio;
+    
     public Admin() {
-        initComponents();
+       initComponents();
+        
+    }
+    //Admin(Inicio jf_inicio){
+      //  this.jf_inicio = jf_inicio;
+        //initComponents();
+    //}
+    //private void regresar(){
+      //  jf_inicio.setVisible(true);
+    //}
+    public void invisible (){//Método para desactivar la visibilidad del framde de menú
+        this.setVisible(false);
     }
 
     /**
@@ -28,73 +64,257 @@ public class Admin extends javax.swing.JFrame {
     private void initComponents() {
 
         jl_usuario = new javax.swing.JLabel();
-        jb_Registro = new javax.swing.JButton();
         jb_Compras = new javax.swing.JButton();
         jb_Proyectos = new javax.swing.JButton();
         jb_Inventario = new javax.swing.JButton();
         jb_empleados = new javax.swing.JButton();
-        jb_Permisos = new javax.swing.JButton();
+        jb_proveedores = new javax.swing.JButton();
+        jb_usuarios = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jm_cambio_nombre = new javax.swing.JMenuItem();
+        jm_cambiar_contraseña = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jm_ayuda = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jm_cerrar_sesión = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jl_usuario.setEnabled(false);
 
-        jb_Registro.setText("Registro");
-
         jb_Compras.setText("Compras");
+        jb_Compras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_ComprasMouseClicked(evt);
+            }
+        });
 
         jb_Proyectos.setText("Proyectos");
+        jb_Proyectos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_ProyectosMouseClicked(evt);
+            }
+        });
 
         jb_Inventario.setText("Inventario");
+        jb_Inventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_InventarioMouseClicked(evt);
+            }
+        });
 
         jb_empleados.setText("Empleados");
+        jb_empleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_empleadosMouseClicked(evt);
+            }
+        });
 
-        jb_Permisos.setText("Permisos");
+        jb_proveedores.setText("Proveedores");
+        jb_proveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_proveedoresMouseClicked(evt);
+            }
+        });
+
+        jb_usuarios.setText("Usuarios");
+        jb_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_usuariosMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego\\Downloads\\PardoLOGO (1).jpg")); // NOI18N
+
+        jMenu1.setText("Menú");
+
+        jm_cambio_nombre.setText("Cambiar nombre de usuario");
+        jm_cambio_nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_cambio_nombreActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jm_cambio_nombre);
+
+        jm_cambiar_contraseña.setText("Cambiar contraseña");
+        jm_cambiar_contraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_cambiar_contraseñaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jm_cambiar_contraseña);
+        jMenu1.add(jSeparator2);
+
+        jm_ayuda.setText("Ayuda");
+        jMenu1.add(jm_ayuda);
+        jMenu1.add(jSeparator3);
+
+        jm_cerrar_sesión.setText("Cerrar sesión");
+        jm_cerrar_sesión.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_cerrar_sesiónActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jm_cerrar_sesión);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(81, 81, 81)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jb_Registro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_Proyectos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jb_empleados))
-                .addGap(79, 79, 79)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jb_Inventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_Compras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_Permisos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(74, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jl_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jb_proveedores)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jb_Proyectos)
+                                .addComponent(jb_empleados)))
+                        .addGap(77, 77, 77))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jl_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jb_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_Inventario)
+                            .addComponent(jb_Compras, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 58, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jl_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jb_Registro, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(jb_Compras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_Proyectos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_Inventario, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jl_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_Compras, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_Proyectos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_empleados, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_Permisos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addComponent(jb_Inventario, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_proveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jb_ComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ComprasMouseClicked
+        if(frcompra == null)
+       {
+         frcompra = new Registro_compras();
+         frcompra.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jb_ComprasMouseClicked
+
+    private void jb_ProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ProyectosMouseClicked
+        if(frpro == null)
+       {
+         frpro = new Proyecto();
+         frpro.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jb_ProyectosMouseClicked
+
+    private void jb_InventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_InventarioMouseClicked
+        if(frin == null)
+       {
+         frin = new Inventario();
+         frin.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jb_InventarioMouseClicked
+
+    private void jb_empleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_empleadosMouseClicked
+        if(frempleado == null)
+       {
+            try {
+                frempleado = new Empleado();
+            } catch (SQLException ex) {
+                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         frempleado.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jb_empleadosMouseClicked
+
+    private void jm_cerrar_sesiónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_cerrar_sesiónActionPerformed
+        if(frinicio == null)
+       {
+         frinicio = new Inicio();
+         frinicio.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jm_cerrar_sesiónActionPerformed
+
+    private void jb_proveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_proveedoresMouseClicked
+        if(frprove == null)
+       {
+         frprove = new Proveedores();
+         frprove.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jb_proveedoresMouseClicked
+
+    private void jb_usuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_usuariosMouseClicked
+        if(frusuario == null)
+       {
+            try {
+                frusuario = new Usuarios();
+            } catch (SQLException ex) {
+                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         frusuario.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jb_usuariosMouseClicked
+
+    private void jm_cambio_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_cambio_nombreActionPerformed
+       if(frnombre == null)
+       {
+         frnombre = new Nombre_usuario();
+         frnombre.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jm_cambio_nombreActionPerformed
+
+    private void jm_cambiar_contraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_cambiar_contraseñaActionPerformed
+        if(frnueva == null)
+       {
+         frnueva = new nueva_contra();
+         frnueva.setVisible(true);
+         fradmin = null;
+         invisible();
+       }
+    }//GEN-LAST:event_jm_cambiar_contraseñaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,12 +353,21 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JButton jb_Compras;
     private javax.swing.JButton jb_Inventario;
-    private javax.swing.JButton jb_Permisos;
     private javax.swing.JButton jb_Proyectos;
-    private javax.swing.JButton jb_Registro;
     private javax.swing.JButton jb_empleados;
+    private javax.swing.JButton jb_proveedores;
+    private javax.swing.JButton jb_usuarios;
     private javax.swing.JLabel jl_usuario;
+    private javax.swing.JMenuItem jm_ayuda;
+    private javax.swing.JMenuItem jm_cambiar_contraseña;
+    private javax.swing.JMenuItem jm_cambio_nombre;
+    private javax.swing.JMenuItem jm_cerrar_sesión;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,18 +3,124 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Escritorio;
 
-/**
- *
- * @author manl_
- */
+import java.sql.DriverManager; 
+import java.sql.Connection; 
+import java.sql.ResultSet; 
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class Proveedores extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Proveedores
-     */
+    private Connection conexion;     
+    private Statement st;     
+    private ResultSet rs;
+    Admin fradmin = null;
+    public void Conectar() {
+        try {
+            conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/pdesign", "root", "");
+            st = conexion.createStatement();
+            rs = st.executeQuery("Select * from proveedor;");
+            inicio();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error 000" + ex.getMessage());
+        }
+    }
+     public void inicio() {
+        try {
+            rs.first();
+            llenarDatos();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error 001" + ex.getMessage());
+        }
+     }
+    public void llenarDatos() {
+        try{
+            this.jtf_Nombre_P.setText(rs.getString("Nombre_P"));
+            this.jtf_tel_p.setText(rs.getString("tel_p"));
+            this.jtf_CORREO.setText(rs.getString("CORREO"));
+            this.jtf_id_p.setText(rs.getString("id_proveedor"));
+        }catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error 002" + ex.getMessage());
+        }
+    }
+    public void Habilitar(boolean f){
+        this.jtf_CORREO.setEditable(f);
+        this.jtf_Nombre_P.setEditable(f);
+        this.jtf_tel_p.setEditable(f);
+        this.jb_Guardar.setEnabled(f);
+        this.jb_cancelar.setEnabled(f);
+    }
+    public void vaciar(){
+       this.jtf_CORREO.setText("");
+       this.jtf_Nombre_P.setText("");
+       this.jtf_id_p.setText("00");
+       this.jtf_tel_p.setText("");
+    }
+    public void botones(boolean f){
+        this.jb_Eliminar.setEnabled(f);
+        this.jb_Modificar.setEnabled(f);
+        this.jb_Nuevo.setEnabled(f);
+    }
+     private void guardar(){
+     try{
+            int id_prov =Integer.parseInt(this.jtf_id_p.getText());
+            String telefono = this.jtf_tel_p.getText();
+            String correo = this.jtf_CORREO.getText();
+            String nombre_p = this.jtf_Nombre_P.getText();
+            if (id_prov == 00){
+        //toma de valores
+                st.executeUpdate("Insert into proveedor (Nombre_P,tel_p,CORREO)"+"values ('"+ nombre_p +"','"+ telefono +"','"+ correo +"');");
+            }
+            else{
+                st.executeUpdate("Update proveedor set Nombre_P = '"+ nombre_p +"', tel_p = '"+ telefono +"', CORREO ='"+correo+"' where id_proveedor = '"+id_prov+"';");
+            }
+            rs=st.executeQuery("Select * from proveedor");             
+            rs.next();
+        }catch (SQLException err){
+            JOptionPane.showMessageDialog(null,"Error 003 "+err.getMessage()); 
+        }
+    }
+    private void borrarRegistro(){
+        int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea eiminar el registro?");
+        if (JOptionPane.OK_OPTION== confirmar){
+        try {
+            int id_prov = Integer.parseInt(this.jtf_id_p.getText());
+            st.executeUpdate(" Delete from proveedor where id_proveedor = "+ id_prov);
+            JOptionPane.showMessageDialog(null, "Articulo Borrado");
+            rs=st.executeQuery("Select * from proveedor");             
+            rs.next();
+            inicio();
+        }
+        
+        catch(Exception err){
+            JOptionPane.showMessageDialog(null, "Error 004 " + err.getMessage());
+        }
+        }}
+    public void Tabla_prov() {
+        DefaultTableModel model1 = new DefaultTableModel();
+        ResultSet rs = Database.getTabla("Select id_proveedor, Nombre_P from proveedor");
+        model1.setColumnIdentifiers(new Object[]{"ID","Nombre"});
+        try {
+           while (rs.next()){
+            model1.addRow(new Object[]{rs.getString("id_proveedor"), rs.getString("Nombre_P")});
+        }
+           jtable_proveedor.setModel(model1);
+        }
+        catch (SQLException e){
+            System.out.println (e);
+        }
+    }
     public Proveedores() {
         initComponents();
+        Conectar();
+        Tabla_prov();
     }
 
     /**
@@ -26,32 +132,26 @@ public class Proveedores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jl_proveedores = new javax.swing.JList<>();
         jp_Datos = new javax.swing.JPanel();
         jl_id_p = new javax.swing.JLabel();
         jl_Nombre_P = new javax.swing.JLabel();
         jl_tel_p = new javax.swing.JLabel();
         jl_CORREO = new javax.swing.JLabel();
-        jtf_id_p = new javax.swing.JTextField();
         jtf_Nombre_P = new javax.swing.JTextField();
         jtf_tel_p = new javax.swing.JTextField();
         jtf_CORREO = new javax.swing.JTextField();
+        jtf_id_p = new javax.swing.JTextField();
         jp_Botones = new javax.swing.JPanel();
         jb_Nuevo = new javax.swing.JButton();
         jb_Modificar = new javax.swing.JButton();
         jb_Eliminar = new javax.swing.JButton();
         jb_Guardar = new javax.swing.JButton();
         jb_Salir = new javax.swing.JButton();
+        jb_cancelar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtable_proveedor = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jl_proveedores.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jl_proveedores);
 
         jl_id_p.setText("ID:");
 
@@ -61,14 +161,17 @@ public class Proveedores extends javax.swing.JFrame {
 
         jl_CORREO.setText("Correo:");
 
-        jtf_id_p.setEditable(false);
-        jtf_id_p.setText("00");
-
+        jtf_Nombre_P.setEditable(false);
         jtf_Nombre_P.setText("  ");
 
+        jtf_tel_p.setEditable(false);
         jtf_tel_p.setText("  ");
 
+        jtf_CORREO.setEditable(false);
         jtf_CORREO.setText("  ");
+
+        jtf_id_p.setEditable(false);
+        jtf_id_p.setText("0");
 
         javax.swing.GroupLayout jp_DatosLayout = new javax.swing.GroupLayout(jp_Datos);
         jp_Datos.setLayout(jp_DatosLayout);
@@ -83,12 +186,12 @@ public class Proveedores extends javax.swing.JFrame {
                     .addComponent(jl_CORREO))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jp_DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_Nombre_P)
+                    .addComponent(jtf_Nombre_P, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                     .addComponent(jtf_tel_p)
+                    .addComponent(jtf_CORREO)
                     .addGroup(jp_DatosLayout.createSequentialGroup()
-                        .addComponent(jtf_id_p, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 107, Short.MAX_VALUE))
-                    .addComponent(jtf_CORREO))
+                        .addComponent(jtf_id_p, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jp_DatosLayout.setVerticalGroup(
@@ -114,14 +217,48 @@ public class Proveedores extends javax.swing.JFrame {
         );
 
         jb_Nuevo.setText("Nuevo");
+        jb_Nuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_NuevoMouseClicked(evt);
+            }
+        });
 
         jb_Modificar.setText("Modificar");
+        jb_Modificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_ModificarMouseClicked(evt);
+            }
+        });
 
         jb_Eliminar.setText("Eliminar");
+        jb_Eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_EliminarMouseClicked(evt);
+            }
+        });
 
         jb_Guardar.setText("Guardar");
+        jb_Guardar.setEnabled(false);
+        jb_Guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_GuardarMouseClicked(evt);
+            }
+        });
 
         jb_Salir.setText("Salir");
+        jb_Salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_SalirMouseClicked(evt);
+            }
+        });
+
+        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setEnabled(false);
+        jb_cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_cancelarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jp_BotonesLayout = new javax.swing.GroupLayout(jp_Botones);
         jp_Botones.setLayout(jp_BotonesLayout);
@@ -131,29 +268,76 @@ public class Proveedores extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_Nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_Modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                    .addComponent(jb_Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jb_Modificar)
+                    .addComponent(jb_cancelar))
                 .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_Guardar)
-                    .addComponent(jb_Eliminar, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(29, 29, 29)
-                .addComponent(jb_Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addGroup(jp_BotonesLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jb_Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
+                    .addGroup(jp_BotonesLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jb_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(169, Short.MAX_VALUE))))
         );
         jp_BotonesLayout.setVerticalGroup(
             jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_BotonesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_Nuevo)
-                    .addComponent(jb_Eliminar)
-                    .addComponent(jb_Salir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_Modificar)
-                    .addComponent(jb_Guardar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_BotonesLayout.createSequentialGroup()
+                        .addComponent(jb_Eliminar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jp_BotonesLayout.createSequentialGroup()
+                        .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jb_Nuevo)
+                            .addComponent(jb_Modificar))
+                        .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jp_BotonesLayout.createSequentialGroup()
+                                .addGroup(jp_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jb_Guardar)
+                                    .addComponent(jb_cancelar))
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_BotonesLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jb_Salir))))))
         );
+
+        jtable_proveedor = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int ColumnIndex){
+                return false;
+            }
+        };
+        jtable_proveedor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Nombre"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtable_proveedor.setMaximumSize(new java.awt.Dimension(21447, 64));
+        jtable_proveedor.setPreferredSize(new java.awt.Dimension(60, 64));
+        jtable_proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtable_proveedorMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtable_proveedor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,29 +346,94 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jp_Botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jp_Botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(35, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jp_Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jp_Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jp_Datos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jp_Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jp_Botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jb_NuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_NuevoMouseClicked
+        botones(false);
+        Habilitar(true);
+        vaciar();
+    }//GEN-LAST:event_jb_NuevoMouseClicked
+
+    private void jb_ModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ModificarMouseClicked
+        botones(false);
+        Habilitar(true);
+    }//GEN-LAST:event_jb_ModificarMouseClicked
+
+    private void jb_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cancelarMouseClicked
+        botones(true);
+        Habilitar(false);
+        inicio();
+    }//GEN-LAST:event_jb_cancelarMouseClicked
+
+    private void jb_GuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_GuardarMouseClicked
+        guardar();
+        Habilitar(false);
+        botones(true);
+        inicio();
+        Tabla_prov();
+    }//GEN-LAST:event_jb_GuardarMouseClicked
+
+    private void jb_EliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_EliminarMouseClicked
+        borrarRegistro();
+        Habilitar(false);
+        botones(true);
+        inicio();
+        Tabla_prov();
+    }//GEN-LAST:event_jb_EliminarMouseClicked
+
+    private void jtable_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtable_proveedorMouseClicked
+         try {
+            int numero;
+            Object cod;
+            numero = jtable_proveedor.getSelectedRow();
+            cod = jtable_proveedor.getValueAt(numero, 0);
+            String sql = ("Select * from proveedor where id_proveedor ="+cod+";");
+            rs = st.executeQuery(sql);
+            this.jtf_Nombre_P.setText(rs.getString("Nombre_P"));
+            this.jtf_tel_p.setText(rs.getString("tel_p"));
+            this.jtf_CORREO.setText(rs.getString("CORREO"));
+            this.jtf_id_p.setText(rs.getString("id_proveedor"));
+            rs=st.executeQuery("Select * from productos"); 
+            rs.next();
+        } catch (SQLException ex) {
+            
+        }
+        inicio();
+    }//GEN-LAST:event_jtable_proveedorMouseClicked
+
+    private void jb_SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_SalirMouseClicked
+        
+        if(fradmin == null)
+       {
+         fradmin = new Admin();
+         fradmin.setVisible(true);
+         Admin.frprove = null;
+         this.dispose();
+       }
+    }//GEN-LAST:event_jb_SalirMouseClicked
 
     /**
      * @param args the command line arguments
@@ -222,19 +471,20 @@ public class Proveedores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jb_Eliminar;
     private javax.swing.JButton jb_Guardar;
     private javax.swing.JButton jb_Modificar;
     private javax.swing.JButton jb_Nuevo;
     private javax.swing.JButton jb_Salir;
+    private javax.swing.JButton jb_cancelar;
     private javax.swing.JLabel jl_CORREO;
     private javax.swing.JLabel jl_Nombre_P;
     private javax.swing.JLabel jl_id_p;
-    private javax.swing.JList<String> jl_proveedores;
     private javax.swing.JLabel jl_tel_p;
     private javax.swing.JPanel jp_Botones;
     private javax.swing.JPanel jp_Datos;
+    private javax.swing.JTable jtable_proveedor;
     private javax.swing.JTextField jtf_CORREO;
     private javax.swing.JTextField jtf_Nombre_P;
     private javax.swing.JTextField jtf_id_p;

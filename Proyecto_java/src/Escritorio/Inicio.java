@@ -4,13 +4,82 @@
  * and open the template in the editor.
  */
 package Escritorio;
-
+import static Escritorio.Admin.frnombre;
+import static Escritorio.Database.getConectar;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
 /**
  *
  * @author manl_
  */
 public class Inicio extends javax.swing.JFrame {
-
+    //private void Admin (){
+        //Admin jf_admin = new Admin(this);
+        
+        //jf_admin.setVisible(true);
+        //this.setVisible(false);
+    //}
+    
+    Confirmar c = new Confirmar();
+    User user = new User();
+    Admin fradmin = null;
+    nueva_contra nc = new nueva_contra();
+   
+    
+    public void login(){
+       PreparedStatement ps = null;
+       ResultSet rs = null;
+       Connection conexion = getConectar();
+       String username = jtf_usuario.getText();
+       String pass = new String(jp_pass.getPassword());
+       
+       if (!jtf_usuario.getText().equals("") && !pass.equals("")){
+           
+           String nuevopass = hash.md5(pass);
+           
+           String sql = "SELECT count(id) FROM usuario WHERE username = ? AND password = ?";
+           
+           try{
+               ps = conexion.prepareStatement(sql);
+               ps.setString(1,username);
+               ps.setString(2,nuevopass);
+               rs = ps.executeQuery();
+               
+               if(rs.next()){
+                   
+                   Admin.frnombre = null;
+                   Admin.frnueva = null;
+                   if(fradmin == null)
+                    {
+                        fradmin = new Admin();
+                        fradmin.setVisible(true);
+                        Admin.frinicio = null;
+                        this.dispose();
+                    }
+                   
+                   jtf_usuario.setText("");
+                   jp_pass.setText("");
+                   
+               }
+               else{
+                   JOptionPane.showMessageDialog(null,"Datos incorrectos");
+               }
+               
+           } catch (SQLException ex) {
+               JOptionPane.showMessageDialog(null, "Error inicio_sesión: " + ex.getMessage());
+           }
+       }else{
+           JOptionPane.showMessageDialog(null,"Debe ingresar sus datos");
+       }
+       
+    }
     /**
      * Creates new form Inicio
      */
@@ -30,10 +99,18 @@ public class Inicio extends javax.swing.JFrame {
         jl_usuario = new javax.swing.JLabel();
         jtf_usuario = new javax.swing.JTextField();
         jf_contraseña = new javax.swing.JLabel();
-        jtf_contraseña = new javax.swing.JTextField();
         jb_aceptar = new javax.swing.JButton();
+        jb_cancelar = new javax.swing.JButton();
+        jl_icono = new javax.swing.JLabel();
+        jp_pass = new javax.swing.JPasswordField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jm_olvido = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jm_Ayuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inicio");
 
         jl_usuario.setText("Usuario:");
 
@@ -41,46 +118,114 @@ public class Inicio extends javax.swing.JFrame {
 
         jf_contraseña.setText("Contraseña:");
 
-        jtf_contraseña.setText(" ");
+        jb_aceptar.setText("Ingresar");
+        jb_aceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_aceptarMouseClicked(evt);
+            }
+        });
 
-        jb_aceptar.setText("Aceptar");
+        jb_cancelar.setText("Cancelar");
+        jb_cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_cancelarMouseClicked(evt);
+            }
+        });
+        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_cancelarActionPerformed(evt);
+            }
+        });
+
+        jl_icono.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego\\Downloads\\PardoLOGO (1).jpg")); // NOI18N
+
+        jMenu1.setText("Menú");
+
+        jm_olvido.setText("Olvide mi contraseña");
+        jm_olvido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jm_olvidoMouseClicked(evt);
+            }
+        });
+        jm_olvido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_olvidoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jm_olvido);
+        jMenu1.add(jSeparator1);
+
+        jm_Ayuda.setText("Ayuda");
+        jMenu1.add(jm_Ayuda);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jl_icono)
+                    .addComponent(jtf_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jf_contraseña)
-                            .addComponent(jl_usuario)
-                            .addComponent(jtf_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(jb_aceptar)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                        .addComponent(jb_aceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jb_cancelar))
+                    .addComponent(jp_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jf_contraseña)
+                    .addComponent(jl_usuario))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(67, Short.MAX_VALUE)
-                .addComponent(jl_usuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jtf_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jl_icono)
                 .addGap(18, 18, 18)
-                .addComponent(jf_contraseña)
+                .addComponent(jl_usuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jtf_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jtf_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jb_aceptar)
-                .addGap(23, 23, 23))
+                .addComponent(jf_contraseña)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jp_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_cancelar)
+                    .addComponent(jb_aceptar))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jm_olvidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_olvidoMouseClicked
+
+    }//GEN-LAST:event_jm_olvidoMouseClicked
+
+    private void jm_olvidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_olvidoActionPerformed
+        nc.setVisible(true);
+        
+    }//GEN-LAST:event_jm_olvidoActionPerformed
+
+    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
+  
+    }//GEN-LAST:event_jb_cancelarActionPerformed
+
+    private void jb_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cancelarMouseClicked
+        this.jtf_usuario.setText("");
+        this.jp_pass.setText("");
+    }//GEN-LAST:event_jb_cancelarMouseClicked
+
+    private void jb_aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_aceptarMouseClicked
+           login();
+           
+        
+    }//GEN-LAST:event_jb_aceptarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -119,10 +264,17 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JButton jb_aceptar;
+    private javax.swing.JButton jb_cancelar;
     private javax.swing.JLabel jf_contraseña;
+    private javax.swing.JLabel jl_icono;
     private javax.swing.JLabel jl_usuario;
-    private javax.swing.JTextField jtf_contraseña;
+    private javax.swing.JMenuItem jm_Ayuda;
+    private javax.swing.JMenuItem jm_olvido;
+    private javax.swing.JPasswordField jp_pass;
     private javax.swing.JTextField jtf_usuario;
     // End of variables declaration//GEN-END:variables
 }
